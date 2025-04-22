@@ -1,0 +1,38 @@
+#searchBox {
+    --background: transparent;
+    background-color: #f3f5f3;
+    max-width: 600px;
+    width: 100%;
+    min-width: 300px;
+    border-radius: 20px;
+    border: 1px solid #a8a8a8;
+  
+    transition: background-size 0.5s ease-in-out, background-position-x 0.6s ease-in-out 0.2s;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  
+    background-image: linear-gradient(to right, #9dd88e, #9dd88e);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+
+  
+    &:hover {
+      border: 1px solid #48853b;
+    }
+  
+    &:focus-within{
+        background-size: 800px 100%;
+        border: 1px solid #48853b;
+        background-color: #f3f5f3;
+        background-position-x: 800px;
+    }
+  }
+  
+  
+
+#searchContent{
+    color: #000;
+}
+
+#searchIcon{
+    color: #000;
+}

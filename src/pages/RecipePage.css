@@ -1,0 +1,117 @@
+.ionPage{
+    --ion-background-color: #fdfdfd;
+}
+
+@font-face {
+    font-family: 'StudyAlone';
+    src: url('/assets/fonts/Study Alone.otf') format('opentype');
+}  
+
+.recipeAccordion{
+
+    ion-icon{
+        color: #000000;
+    }
+
+    &:hover{
+        color: #000000;
+    }
+
+}
+
+#recipeContentBox{
+    margin-top: 20px;
+    width: 90%;
+    align-self: center;
+    justify-self: center;
+    border: 5px solid #ccc;
+    border-radius: 30px;
+    padding: 20px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    ion-img{
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    #generalRecipeInfo{
+        flex-grow: 1;
+    }
+
+}
+
+.recipeConteiners{
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
+    background-color: blueviolet;
+}
+
+
+.recipeConteinersTitleItem {
+    --background: transparent;
+    --padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black;
+    --border-style: none;
+}
+  
+.recipeConteinersTitleLabel {
+    display: inline-block;
+    font-family: 'StudyAlone', sans-serif !important;
+    font-size: 40px !important;
+    font-weight: 600;
+    margin: 5px;
+    background-color: rgba(255, 255, 255, 0.507);
+    padding: 2px 8px;
+    border-radius: 8px;
+    text-align: center;
+}  
+
+#recyclableItemContainer{
+    background-image: url('../assets/images/ecologic_background.jpg');
+}
+
+#homeToolsItemContainer{
+    background-image: url('../assets/images/tools_background.jpg');
+}
+
+#shopToolsItemContainer{
+    background-image: url('../assets/images/shopping_background.jpg');
+    background-position-y: 330%;
+}
+
+#recipeStepsItemContainer{
+    background-image: url('../assets/images/recipe_background.jpg');
+}
+
+#recipeName{
+    display: inline-block;
+    font-family: 'StudyAlone', sans-serif !important;
+    font-size: 40px !important;
+    font-weight: 600;
+    color: #000000;
+    overflow: hidden;
+}
+
+#ecoPointsContainer{
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    ion-label{
+        margin-left: 5px;
+    }
+
+    ion-icon{
+        width: 20px;
+        height: 20px;
+    }
+
+}
