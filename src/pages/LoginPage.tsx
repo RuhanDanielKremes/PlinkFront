@@ -3,9 +3,40 @@ import plink from "../assets/images/Plink.png";
 import { personCircle, lockClosed, navigate } from "ionicons/icons";
 import './LoginPage.css';
 import { useHistory } from "react-router-dom";
+import { UserModel } from "../model/UserModel";
+import { UserControler } from "../controlers/UserControler";
+import { LoginControler } from "../controlers/LoginControler";
 
 const LoginPage: React.FC = () => {
     const history = useHistory();
+
+    function submitForm(event: React.FormEvent) {
+
+        const user = (document.getElementById("User") as HTMLInputElement).value;
+        const password = (document.getElementById("password") as HTMLInputElement).value;
+
+        let userModel = new UserModel();
+        userModel.setLogin(user);
+        userModel.setSenha(password);
+
+        console.log(userModel.toJson());
+
+        const loginControler = new LoginControler();
+
+        loginControler.login(userModel).then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+                sessionStorage.setItem('token', response.data.token);
+                history.push("/recipes");
+            } else {
+                alert("Error: " + response.statusText);
+            }
+        }).catch((error) => {
+            console.error("Error logging in:", error);
+            alert("Error: " + error.message);
+        });
+
+    }
 
     return (
         <IonPage id="main-content">
@@ -28,7 +59,7 @@ const LoginPage: React.FC = () => {
                                     <IonInput className="ion-input-login" label="Senha" labelPlacement="floating" placeholder="Senha" id="password" type="password" required style={{width:"460px"}}></IonInput>
                                 </IonItem>
                                 <div className="setCenter">
-                                    <IonButton type="submit" id="loginButton">LOGIN</IonButton>
+                                    <IonButton id="loginButton" onClick={submitForm}>LOGIN</IonButton>
                                 </div>
                             </form>
                         </IonItem>

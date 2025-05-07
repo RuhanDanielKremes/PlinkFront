@@ -3,9 +3,43 @@ import plink from "../assets/images/Plink.png";
 import { personCircle, lockClosed, navigate, mail } from "ionicons/icons";
 import './SignInPage.css';
 import { useHistory } from "react-router-dom";
+import { UserModel } from "../model/UserModel";
+import { UserControler } from "../controlers/UserControler";
 
 const SignInPage: React.FC = () => {
     const history = useHistory();
+
+    function submitForm(event: React.FormEvent) {
+
+        const user = (document.getElementById("User") as HTMLInputElement).value;
+        const password = (document.getElementById("password") as HTMLInputElement).value;
+        const email = (document.getElementById("email") as HTMLInputElement).value;
+
+        let userModel = new UserModel();
+
+        userModel.setLogin(email);
+        userModel.setSenha(password);
+        userModel.setEmail(email);
+        userModel.setNomeCompleto(user);
+
+        console.log(userModel.toJson());
+
+        const userControler = new UserControler();
+        userControler.createUser(userModel).then((response) => {
+            console.log(response);
+            if (response.status === 201) {
+                alert("User created successfully!\nPlease login to continue.");
+                history.push("/login");
+            } else {
+                alert("Error: " + response.statusText);
+            }
+        }).catch((error) => {
+            console.error("Error creating user:", error);
+            alert("Error: " + error.message);
+        });
+
+
+    }
 
     return (
         <IonPage id="main-content">
@@ -17,11 +51,10 @@ const SignInPage: React.FC = () => {
                             <IonTitle className="ion-text-center" size="large" style={{marginBottom: "20px", marginTop: "20px", color:"#000", fontSize:"40px"}}>Subscribe</IonTitle>
                         </IonItem>
                         <IonItem id="II02" className="ion-item-login itemLightBackground1" style={{maxWidth: "600px"}}>
-                            {/* <form onSubmit={handleSubmit(tryLogin)}> */}
                             <form>
                                 <IonItem id="II03" className="ion-item-login itemLightBackground1 greyText" style={{ "--min-height": "80px", marginTop: "20px"}}>
                                     <IonIcon icon={personCircle} color="primary" style={{marginRight: "20px"}}></IonIcon>
-                                    <IonInput className="ion-input-login" label="Usuário" labelPlacement="floating"  placeholder="Usuário" id="User" required style={{width:"460px"}}></IonInput>
+                                    <IonInput className="ion-input-login" label="Fullname" labelPlacement="floating"  placeholder="Fullname" id="User" required style={{width:"460px"}}></IonInput>
                                 </IonItem>
                                 <IonItem id="II04" className="ion-item-login itemLightBackground1 greyText" style={{ "--min-height": "80px", Width: "400px" }}>
                                     <IonIcon icon={lockClosed} color="primary" style={{marginRight: "20px"}}></IonIcon>
@@ -32,7 +65,7 @@ const SignInPage: React.FC = () => {
                                     <IonInput className="ion-input-login" label="Email" labelPlacement="floating" placeholder="Email" id="email" required style={{ width: "460px" }}></IonInput>
                                 </IonItem>
                                 <div className="setCenter">
-                                    <IonButton type="submit" id="loginButton">Subscribe</IonButton>
+                                    <IonButton id="loginButton" onClick={submitForm}>Subscribe</IonButton>
                                 </div>
                             </form>
                         </IonItem>
