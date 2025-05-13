@@ -2,6 +2,7 @@ import { IonAccordion, IonAccordionGroup, IonContent, IonIcon, IonImg, IonItem, 
 import { RecipeModel } from "../model/RecipeModel";
 import './RecipePage.css';
 import { caretDownCircle, cash, flask, leaf, timer } from "ionicons/icons";
+import SidebarMenu from "../components/SidebarMenu";
 
 const RecipePage: React.FC = () => {
 
@@ -27,7 +28,8 @@ const RecipePage: React.FC = () => {
     return (
         <IonPage className="ionPage">
             <IonContent fullscreen style={{ backgroundColor: 'transsparent' }}>
-                <div id="recipeContentBox">
+                <SidebarMenu></SidebarMenu>
+                <div id="recipeContentBox" style={{maxWidth:"90%", display:"flex"}}>
                     <IonImg src={recipe.getImagemURL()}></IonImg>
                     <div id="generalRecipeInfo">
                         <IonTitle id="recipeName">{recipe.getRecipeName()}</IonTitle>
@@ -111,11 +113,6 @@ const RecipePage: React.FC = () => {
                             </IonAccordion>
                         </IonAccordionGroup>
                     </div>
-                </div>
-                <div className="recipe-page">
-                    <h1>Recipe Page</h1>
-                    <p>This is the recipe page.</p>
-                    <p>{recipeIdentifier}</p>
                 </div>
             </IonContent>
         </IonPage>

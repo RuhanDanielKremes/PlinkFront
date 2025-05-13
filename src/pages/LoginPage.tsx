@@ -1,16 +1,24 @@
-import { IonButton, IonContent, IonIcon, IonImg, IonInput, IonItem, IonPage, IonTitle, IonToggle } from "@ionic/react"
+import { IonButton, IonContent, IonIcon, IonImg, IonInput, IonItem, IonPage, IonTitle } from "@ionic/react"
 import plink from "../assets/images/Plink.png";
-import { personCircle, lockClosed, navigate } from "ionicons/icons";
+import { personCircle, lockClosed} from "ionicons/icons";
 import './LoginPage.css';
 import { useHistory } from "react-router-dom";
 import { UserModel } from "../model/UserModel";
-import { UserControler } from "../controlers/UserControler";
 import { LoginControler } from "../controlers/LoginControler";
 
 const LoginPage: React.FC = () => {
     const history = useHistory();
 
-    function submitForm(event: React.FormEvent) {
+    function submitForm() {
+
+        try {
+            let token = sessionStorage.getItem('token');
+            if (token !== null && token !== undefined) {
+                sessionStorage.removeItem('token');
+            }
+        } catch {
+            
+        }
 
         const user = (document.getElementById("User") as HTMLInputElement).value;
         const password = (document.getElementById("password") as HTMLInputElement).value;
@@ -63,7 +71,7 @@ const LoginPage: React.FC = () => {
                                 </div>
                             </form>
                         </IonItem>
-                        <IonItem style={{justifyContent:"center"}} id="subscribeContainer" className="ion-item-login itemLightBackground1 greyText" lines="none">
+                        <IonItem type="submit"  style={{justifyContent:"center"}} id="subscribeContainer" className="ion-item-login itemLightBackground1 greyText" lines="none">
                             <p>Does you not have an login?</p>
                             <a href="/signin" style={{paddingLeft:"3px"}}>Subscribe!</a>
                         </IonItem>

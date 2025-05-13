@@ -28,7 +28,7 @@
     
 }
 
-.ion-item-login{
+.ion-item-signIn{
     --border-color: transparent;
     justify-self: center;
 }
@@ -48,7 +48,7 @@
     --color: #1f1f1f;
 }
 
-.ion-input-login{
+.ion-input-signIn{
     border: solid 1px #e4e4e4;
     border-radius:  8px;
     background-color: #ffffff;
@@ -89,7 +89,7 @@ ion-text-center{
     color: #000000;
 }
 
-#loginButton{
+#signInButton{
     margin-top: 20px;
     margin-bottom: 20px;
     color: #ffffff;

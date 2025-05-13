@@ -1,6 +1,6 @@
-import { IonButton, IonContent, IonIcon, IonImg, IonInput, IonItem, IonPage, IonTitle, IonToggle } from "@ionic/react"
+import { IonButton, IonContent, IonIcon, IonImg, IonInput, IonItem, IonPage, IonTitle} from "@ionic/react"
 import plink from "../assets/images/Plink.png";
-import { personCircle, lockClosed, navigate, mail } from "ionicons/icons";
+import { personCircle, lockClosed, mail } from "ionicons/icons";
 import './SignInPage.css';
 import { useHistory } from "react-router-dom";
 import { UserModel } from "../model/UserModel";
@@ -9,7 +9,7 @@ import { UserControler } from "../controlers/UserControler";
 const SignInPage: React.FC = () => {
     const history = useHistory();
 
-    function submitForm(event: React.FormEvent) {
+    function submitForm() {
 
         const user = (document.getElementById("User") as HTMLInputElement).value;
         const password = (document.getElementById("password") as HTMLInputElement).value;
@@ -22,14 +22,12 @@ const SignInPage: React.FC = () => {
         userModel.setEmail(email);
         userModel.setNomeCompleto(user);
 
-        console.log(userModel.toJson());
-
         const userControler = new UserControler();
         userControler.createUser(userModel).then((response) => {
             console.log(response);
             if (response.status === 201) {
                 alert("User created successfully!\nPlease login to continue.");
-                history.push("/login");
+                window.location.href = "/login";
             } else {
                 alert("Error: " + response.statusText);
             }
@@ -50,22 +48,22 @@ const SignInPage: React.FC = () => {
                         <IonItem id="II01" className="ionItemBottonBorder itemLightBackground1" style={{marginTop : "20px"}}>
                             <IonTitle className="ion-text-center" size="large" style={{marginBottom: "20px", marginTop: "20px", color:"#000", fontSize:"40px"}}>Subscribe</IonTitle>
                         </IonItem>
-                        <IonItem id="II02" className="ion-item-login itemLightBackground1" style={{maxWidth: "600px"}}>
+                        <IonItem id="II02" className="ion-item-signIn itemLightBackground1" style={{maxWidth: "600px"}}>
                             <form>
-                                <IonItem id="II03" className="ion-item-login itemLightBackground1 greyText" style={{ "--min-height": "80px", marginTop: "20px"}}>
+                                <IonItem id="II03" className="ion-item-signIn itemLightBackground1 greyText" style={{ "--min-height": "80px", marginTop: "20px"}}>
                                     <IonIcon icon={personCircle} color="primary" style={{marginRight: "20px"}}></IonIcon>
-                                    <IonInput className="ion-input-login" label="Fullname" labelPlacement="floating"  placeholder="Fullname" id="User" required style={{width:"460px"}}></IonInput>
+                                    <IonInput className="ion-input-signIn" label="Fullname" labelPlacement="floating"  placeholder="Fullname" id="User" required style={{width:"460px"}}></IonInput>
                                 </IonItem>
-                                <IonItem id="II04" className="ion-item-login itemLightBackground1 greyText" style={{ "--min-height": "80px", Width: "400px" }}>
-                                    <IonIcon icon={lockClosed} color="primary" style={{marginRight: "20px"}}></IonIcon>
-                                    <IonInput className="ion-input-login" label="Senha" labelPlacement="floating" placeholder="Senha" id="password" type="password" required style={{width:"460px"}}></IonInput>
-                                </IonItem>
-                                <IonItem id="II05" className="ion-item-login itemLightBackground1 greyText" style={{ "--min-height": "80px", Width: "400px" }}>
+                                <IonItem id="II05" className="ion-item-signIn itemLightBackground1 greyText" style={{ "--min-height": "80px", Width: "400px" }}>
                                     <IonIcon icon={mail} color="primary" style={{marginRight: "20px"}}></IonIcon>
-                                    <IonInput className="ion-input-login" label="Email" labelPlacement="floating" placeholder="Email" id="email" required style={{ width: "460px" }}></IonInput>
+                                    <IonInput className="ion-input-signIn" label="Email" labelPlacement="floating" placeholder="Email" id="email" required style={{ width: "460px" }}></IonInput>
+                                </IonItem>
+                                <IonItem id="II04" className="ion-item-signIn itemLightBackground1 greyText" style={{ "--min-height": "80px", Width: "400px" }}>
+                                    <IonIcon icon={lockClosed} color="primary" style={{marginRight: "20px"}}></IonIcon>
+                                    <IonInput className="ion-input-signIn" label="Senha" labelPlacement="floating" placeholder="Senha" id="password" type="password" required style={{width:"460px"}} color={"dark"}></IonInput>
                                 </IonItem>
                                 <div className="setCenter">
-                                    <IonButton id="loginButton" onClick={submitForm}>Subscribe</IonButton>
+                                    <IonButton id="signInButton" onClick={submitForm}>Subscribe</IonButton>
                                 </div>
                             </form>
                         </IonItem>

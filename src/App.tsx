@@ -36,6 +36,7 @@ import SearchPage from './pages/SearchPage';
 import RecipePage from './pages/RecipePage';
 import LoginPage from './pages/LoginPage';
 import SignInPage from './pages/SignInPage';
+import RecipeRegistrierPage from './pages/RecipeRegistrier';
 
 setupIonicReact();
 
@@ -60,6 +61,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/signin">
           <SignInPage></SignInPage>
+        </Route>
+        <Route exact path="/recipes/register">
+          <RecipeRegistrierPage></RecipeRegistrierPage>
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
