@@ -1,9 +1,9 @@
 import { IonContent, IonHeader, IonImg, IonItem, IonList, IonPage } from "@ionic/react";
 import SearchBar from "../components/SearchBar";
 import './SearchPage.css';
-import plink from "../assets/images/Plink.png";
 import SearchItem from "../components/SearchItem";
 import { RecipeModel } from "../model/RecipeModel";
+import Sidebar from "../components/Sidebar";
 
 const SearchPage: React.FC = () => {
 
@@ -30,9 +30,10 @@ const SearchPage: React.FC = () => {
     recipe2.setRecipeCategory("Gardening");
 
     return (
-        <IonPage className="ionPage">
+        <div style={{display: "flex"}}>
+        <Sidebar />
+        <IonPage className="ionPage" style={{marginLeft: '70px'}}>
             <IonHeader style={{ height: "60px", backgroundColor:"transparent", display:"flex", flexDirection:"row", padding:"5px"}}>
-                <IonImg src={plink} style={{ maxWidth: "50px", marginRight:"5px"}}></IonImg>
                 <SearchBar></SearchBar>          
             </IonHeader>
             <IonContent fullscreen>
@@ -42,6 +43,7 @@ const SearchPage: React.FC = () => {
                 </IonList>
             </IonContent>
         </IonPage>
+        </div>
     );
 
 };
