@@ -1,0 +1,57 @@
+.sidebar {
+  width: 70px;
+  height: 100vh;
+  background-color: #7B9D7F;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+  color: white;
+  z-index: 1000;
+}
+
+
+.sidebar .logo {
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.sidebar-icon {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+    
+
+}
+
+.icon-wrapper {
+    text-align: center;
+    font-size: 40px;
+    color: #fff;
+    transition:  0.3s ease;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.no-style-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+
+.icon-wrapper:hover{
+    background-color: #D9D9D933 ;
+    cursor: pointer;
+}
+
+
+.config{
+    margin-top: auto;
+    margin-bottom: 20px;
+
+}

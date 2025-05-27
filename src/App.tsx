@@ -37,6 +37,7 @@ import RecipePage from './pages/RecipePage';
 import LoginPage from './pages/LoginPage';
 import SignInPage from './pages/SignInPage';
 import RecipeRegistrierPage from './pages/RecipeRegistrier';
+import UserSettings from './pages/UserSettings';
 
 setupIonicReact();
 
@@ -67,6 +68,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
+        </Route>
+        <Route exact path="/setting">
+          <UserSettings />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

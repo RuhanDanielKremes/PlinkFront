@@ -53,7 +53,7 @@ const LoginPage: React.FC = () => {
                     <div className="mainContainer"> 
                         <IonImg src={plink} onClick={() => history.push("/recipes")}></IonImg>
                         <IonItem id="II01" className="ionItemBottonBorder itemLightBackground1" style={{marginTop : "20px"}}>
-                            <IonTitle className="ion-text-center" size="large" style={{marginBottom: "20px", marginTop: "20px", color:"#000", fontSize:"40px"}}>LOGIN</IonTitle>
+                            <IonTitle id="login-text" className="ion-text-center" size="large" >LOGIN</IonTitle>
                         </IonItem>
                         <IonItem id="II02" className="ion-item-login itemLightBackground1" style={{maxWidth: "600px"}}>
                             {/* <form onSubmit={handleSubmit(tryLogin)}> */}

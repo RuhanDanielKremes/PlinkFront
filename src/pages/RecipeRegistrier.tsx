@@ -6,6 +6,9 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Receita } from "../model/Receita";
 import { ReceitaControler } from "../controlers/ReceitaControler";
 import { IngredienteSet } from "../model/IngredienteSet";
+import './RecipeRegistrier.css';
+import Sidebar from "../components/Sidebar";
+
 
 
 const RecipeRegistrierPage: React.FC = () => {
@@ -158,144 +161,185 @@ const RecipeRegistrierPage: React.FC = () => {
     }
 
     return (
-        <IonPage>
-            <IonContent>
-                {/* <div style={{display:"flex", width:"100%", backgroundColor:"lightcoral"}}>ALELEK</div> */}
-                <div id="recipeRegisterContainer">
-                    <IonItem>
-                        <IonLabel>Recipe Name</IonLabel>
-                        <IonInput id="recipeNameInput"></IonInput>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Recipe Description</IonLabel>
-                        <IonTextarea id="recipeDescriptionInput"></IonTextarea>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Recicable Itens</IonLabel>
-                        <IonInput id="recicableItemInput"></IonInput>
-                        <IonButton onClick={addRecicableIngredients}>
-                            <IonLabel>ADD</IonLabel>
-                            <IonIcon icon={add} slot="icon-only"></IonIcon>
-                        </IonButton>
-                        <IonItem>
+        <div style={{display: "flex"}}>
+            <Sidebar />
+            <IonPage style={{marginLeft: '70px'}}>
+                <IonContent>
+                    {/* <div style={{display:"flex", width:"100%", backgroundColor:"lightcoral"}}>ALELEK</div> */}
+                    <div id="recipeRegisterContainer">
+                        <div className="form-row">
+                        <IonItem className="form-column">
+                            <IonLabel>Recipe Name</IonLabel>
+                            <IonInput id="recipeNameInput"></IonInput>
+                        </IonItem>
+                        <IonItem className="form-column">
+                            <IonLabel>Recipe Description</IonLabel>
+                            <IonTextarea id="recipeDescriptionInput"></IonTextarea>
+                        </IonItem>
+                        </div>
+
+                        <div className="form-row">
+                            <IonItem className="form-column">
+                                <IonLabel>Recicable Itens</IonLabel>
+                                <IonInput id="recicableItemInput"></IonInput>
+                                <IonButton onClick={addRecicableIngredients}>
+                                    <IonLabel>ADD</IonLabel>
+                                    <IonIcon icon={add} slot="icon-only"></IonIcon>
+                                </IonButton>
+                            </IonItem>
+                        <IonItem lines="none">
+                            <div className="chip-container">
                             {recicableIngredients.map((ingredient, index) => (
                                 <IonChip key={index}>
                                     <IonLabel>{ingredient.getName()}</IonLabel>
                                     <IonIcon icon={close} onClick={() => removeRecicableIngredients(index)}></IonIcon>
                                 </IonChip>
-                            ))}
+                            ))} 
+                            </div>
                         </IonItem>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Home Tools</IonLabel>
-                        <IonInput id="homeToolInput"></IonInput>
-                        <IonButton onClick={addHomeTools}>
-                            <IonLabel>ADD</IonLabel>
-                            <IonIcon icon={add} slot="icon-only"></IonIcon>
-                        </IonButton>
-                        <IonItem>
-                            {homeTools.map((ingredient, index) => (
-                                <IonChip key={index}>
-                                    <IonLabel>{ingredient.getName()}</IonLabel>
-                                    <IonIcon icon={close} onClick={() => removeHomeTools(index)}></IonIcon>
-                                </IonChip>
-                            ))}
-                        </IonItem>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Bought Tools</IonLabel>
-                        <IonInput id="boughtToolInput"></IonInput>
-                        <IonButton onClick={addBoughtTools}>
-                            <IonLabel>ADD</IonLabel>
-                            <IonIcon icon={add} slot="icon-only"></IonIcon>
-                        </IonButton>
-                        <IonItem>
-                            {boughtTools.map((ingredient, index) => (
-                                <IonChip key={index}>
-                                    <IonLabel>{ingredient.getName()}</IonLabel>
-                                    <IonIcon icon={close} onClick={() => removeBoughtTools(index)}></IonIcon>
-                                </IonChip>
-                            ))}
-                        </IonItem>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Steps</IonLabel>
-                        <IonInput id="recipeStepInput"></IonInput>
-                        <IonButton onClick={addRecipeStep}>
-                            <IonLabel>ADD</IonLabel>
-                            <IonIcon icon={add} slot="icon-only"></IonIcon>
-                        </IonButton>
-                        <IonItem>
-                            {recipeSteps.map((step, index) => (
-                                <div key={index} style={{display:"flex", width:"100%", justifyContent:"space-between"}}>
-                                    <IonLabel>{ (index+1) +" " + step}</IonLabel>
-                                    <IonIcon icon={close} onClick={() => removeRecipeStep(index)}></IonIcon>
+                        </div>
+
+                        <div className="form-row">
+                            <IonItem className="form-column">
+                                <IonLabel>Home Tools</IonLabel>
+                                <IonInput id="homeToolInput"></IonInput>
+                                <IonButton onClick={addHomeTools}>
+                                    <IonLabel>ADD</IonLabel>
+                                    <IonIcon icon={add} slot="icon-only"></IonIcon>
+                                </IonButton>
+                            </IonItem>
+                            <IonItem lines="none">
+                                <div className="chip-container">
+                                    {homeTools.map((ingredient, index) => (
+                                        <IonChip key={index}>
+                                            <IonLabel>{ingredient.getName()}</IonLabel>
+                                            <IonIcon icon={close} onClick={() => removeHomeTools(index)}></IonIcon>
+                                        </IonChip>
+                                    ))}
                                 </div>
-                            ))}
+                            </IonItem>
+                        </div>
+
+                        <div className="form-row">
+                            <IonItem className="form-column"    >
+                                <IonLabel>Bought Tools</IonLabel>
+                                <IonInput id="boughtToolInput"></IonInput>
+                                <IonButton onClick={addBoughtTools}>
+                                    <IonLabel>ADD</IonLabel>
+                                    <IonIcon icon={add} slot="icon-only"></IonIcon>
+                                </IonButton>
+                            </IonItem>
+                            <IonItem lines="none">
+                                <div className="chip-container">
+                                    {boughtTools.map((ingredient, index) => (
+                                        <IonChip key={index}>
+                                            <IonLabel>{ingredient.getName()}</IonLabel>
+                                            <IonIcon icon={close} onClick={() => removeBoughtTools(index)}></IonIcon>
+                                        </IonChip>
+                                    ))} 
+                                </div>
+                            </IonItem>
+                        </div>
+
+                        <div className="form-row">
+                            <IonItem className="form-column">
+                                <IonLabel>Steps</IonLabel>
+                                <IonInput id="recipeStepInput"></IonInput>
+                                <IonButton onClick={addRecipeStep}>
+                                    <IonLabel>ADD</IonLabel>
+                                    <IonIcon icon={add} slot="icon-only"></IonIcon>
+                                </IonButton>
+                            </IonItem>
+                            <IonItem lines="none">
+                                <div className="chip-container">
+                                    {recipeSteps.map((step, index) => (
+                                        <IonChip key={index}>
+                                            <IonLabel>{ (index+1) +" " + step}</IonLabel>
+                                            <IonIcon icon={close} onClick={() => removeRecipeStep(index)}></IonIcon>
+                                        </IonChip>
+                                    ))}
+                                </div>
+                            </IonItem>
+                        </div>
+
+                        <div className="form-row">
+                            <IonItem className="form-column">
+                                <IonLabel>Prepare time</IonLabel>
+                                <IonInput id="recipePrepareTimeInput" type="number"></IonInput>
+                                <IonLabel>Minutes</IonLabel>
+                            </IonItem>
+                            <IonItem className="form-column"> 
+                                <IonSelect className="popover-select" label="Select Difficulty" interface="popover" id="recipeDificultyInput">
+                                    <IonSelectOption value="FACIL">Easy</IonSelectOption>
+                                    <IonSelectOption value="MODERADO">Medium</IonSelectOption>
+                                    <IonSelectOption value="DIFICIL">Hard</IonSelectOption>
+                                </IonSelect>
+                            </IonItem>
+                        </div>
+
+                        <div className="form-row">
+                            <IonItem className="form-column">
+                                <IonSelect label="Select Cost" interface="popover" id="recipeCostInput">
+                                    <IonSelectOption value="BARATO">no price</IonSelectOption>
+                                    <IonSelectOption value="ECONOMICO">Cheap</IonSelectOption>
+                                    <IonSelectOption value="RAZOAVEL">Medium</IonSelectOption>
+                                    <IonSelectOption value="CARO">Expensive</IonSelectOption>
+                                </IonSelect>
+                            </IonItem>
+                            <IonItem className="form-column">
+                                <IonSelect label="Category" id="recipeCategoryInput" interface="popover">
+                                    <IonSelectOption value="JARDINAGEM">gardening</IonSelectOption>
+                                    <IonSelectOption value="UTILIDADE">utility</IonSelectOption>
+                                    <IonSelectOption value="DECORACAO">decoration</IonSelectOption>
+                                    <IonSelectOption value="BRINQUEDO">toy</IonSelectOption>
+                                </IonSelect>
+                            </IonItem>
+                        </div>
+
+                        <div className="form-row">
+                            <IonItem className="form-column">
+                                <IonLabel>Image URL</IonLabel>
+                                <IonInput id="recipeImageUrlInput"></IonInput>
+                            </IonItem>
+
+                            <IonItem className="form-column">
+                                <IonLabel>Ecological Points</IonLabel>
+                                <IonInput id="recipeEcologicalPointsInput" type="number"></IonInput>
+                            </IonItem>    
+                        </div>
+
+                        <div className="form-row">
+                        <IonItem lines="none" className="form-column">
+                            <IonLabel>Cost</IonLabel>
+                            <div className="custom-cost-input">
+                                <InputNumber mode="currency" currency="BRL" locale="pt-BR"></InputNumber>
+                            </div>
                         </IonItem>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Prepare time</IonLabel>
-                        <IonInput id="recipePrepareTimeInput" type="number"></IonInput>
-                        <IonLabel>Minutes</IonLabel>
-                    </IonItem>
-                    <IonItem>
-                        <IonSelect label="Select Difficulty" interface="popover" id="recipeDificultyInput">
-                            <IonSelectOption value="FACIL">Easy</IonSelectOption>
-                            <IonSelectOption value="MODERADO">Medium</IonSelectOption>
-                            <IonSelectOption value="DIFICIL">Hard</IonSelectOption>
-                        </IonSelect>
-                    </IonItem>
-                    <IonItem>
-                        <IonSelect label="Select Cost" interface="popover" id="recipeCostInput">
-                            <IonSelectOption value="BARATO">no price</IonSelectOption>
-                            <IonSelectOption value="ECONOMICO">Cheap</IonSelectOption>
-                            <IonSelectOption value="RAZOAVEL">Medium</IonSelectOption>
-                            <IonSelectOption value="CARO">Expensive</IonSelectOption>
-                        </IonSelect>
-                    </IonItem>
-                    <IonItem>
-                        <IonSelect label="Category" id="recipeCategoryInput" interface="popover">
-                            <IonSelectOption value="JARDINAGEM">gardening</IonSelectOption>
-                            <IonSelectOption value="UTILIDADE">utility</IonSelectOption>
-                            <IonSelectOption value="DECORACAO">decoration</IonSelectOption>
-                            <IonSelectOption value="BRINQUEDO">toy</IonSelectOption>
-                        </IonSelect>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Image URL</IonLabel>
-                        <IonInput id="recipeImageUrlInput"></IonInput>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Ecological Points</IonLabel>
-                        <IonInput id="recipeEcologicalPointsInput" type="number"></IonInput>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Cost</IonLabel>
-                        <InputNumber mode="currency" currency="BRL" locale="pt-BR"></InputNumber>
-                        <IonLabel>Cost Type</IonLabel>
-                        <IonSelect interface="popover" id="recipeCostInput">
-                            <IonSelectOption value="ECONOMICO">Economic</IonSelectOption>
-                            <IonSelectOption value="BARATO">Cheap</IonSelectOption>
-                            <IonSelectOption value="RAZOAVEL">Medium</IonSelectOption>
-                            <IonSelectOption value="CARO">Expensive</IonSelectOption>
-                        </IonSelect>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Author</IonLabel>
-                        <IonInput id="recipeAuthorInput"></IonInput>
-                    </IonItem>
-                    <IonItem>
-                        <IonButton expand="full" color="danger">
-                            <IonLabel>Cancel</IonLabel>
-                        </IonButton>
-                        <IonButton expand="full" color="success" onClick={sendRecipe}>
-                            <IonLabel>Register Recipe</IonLabel>
-                        </IonButton>
-                    </IonItem>
-                </div>
-            </IonContent>
-        </IonPage>  
+                        <IonItem className="form-column">
+                            <IonSelect  label="Cost Type" interface="popover" id="recipeCostInput">
+                                <IonSelectOption value="ECONOMICO">Economic</IonSelectOption>
+                                <IonSelectOption value="BARATO">Cheap</IonSelectOption>
+                                <IonSelectOption value="RAZOAVEL">Medium</IonSelectOption>
+                                <IonSelectOption value="CARO">Expensive</IonSelectOption>
+                            </IonSelect>
+                        </IonItem>
+                        </div>
+                        <IonItem>
+                            <IonLabel>Author</IonLabel>
+                            <IonInput id="recipeAuthorInput"></IonInput>
+                        </IonItem>
+                        <IonItem>
+                            <IonButton expand="full" color="danger">
+                                <IonLabel>Cancel</IonLabel>
+                            </IonButton>
+                            <IonButton expand="full" color="success" onClick={sendRecipe}>
+                                <IonLabel>Register Recipe</IonLabel>
+                            </IonButton>
+                        </IonItem>
+                    </div>
+                </IonContent>
+            </IonPage>  
+        </div>
     );
 
 }
