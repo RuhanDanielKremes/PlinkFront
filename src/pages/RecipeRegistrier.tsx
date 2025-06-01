@@ -16,6 +16,7 @@ const RecipeRegistrierPage: React.FC = () => {
     const [recicableIngredients, setRecicableIngredients] = useState<Ingredients[]>([]);
     const [homeTools, setHomeTools] = useState<Ingredients[]>([]);
     const [boughtTools, setBoughtTools] = useState<Ingredients[]>([]);
+    const [costValue, setCostValue] = useState<number | null>(null);
 
     const [recipeSteps, setRecipeSteps] = useState<string[]>([]);
 
@@ -96,69 +97,133 @@ const RecipeRegistrierPage: React.FC = () => {
         setRecipeSteps(newRecipeSteps);
     }
 
-    function sendRecipe() {
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+    const handleImageSelection = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (file.type === "image/png") {
+        try {
+            const imageBitmap = await createImageBitmap(file);
+
+            const canvas = document.createElement("canvas");
+            canvas.width = imageBitmap.width;
+            canvas.height = imageBitmap.height;
+
+            const ctx = canvas.getContext("2d");
+            if (!ctx) {
+                console.error("Erro ao obter contexto do canvas");
+                return;
+            }
+
+            ctx.drawImage(imageBitmap, 0, 0);
+
+            canvas.toBlob((blob) => {
+                if (!blob) {
+                    console.error("Erro ao converter imagem para JPG");
+                    return;
+                }
+
+                const convertedFile = new File([blob], file.name.replace(/\.png$/, ".jpg"), {
+                    type: "image/jpeg",
+                });
+
+                setSelectedImage(convertedFile);
+                console.log("Imagem convertida para JPG");
+            }, "image/jpeg", 0.9);
+        } catch (err) {
+            console.error("Erro ao processar imagem PNG:", err);
+        }
+    } else {
+        setSelectedImage(file);
+    }
+};
+
+
+
+
+    async function sendRecipe() {
+
+        
+
+        let imageUrl = "";
+
+        // Upload da imagem (se houver)
+        if (selectedImage) {
+            const formData = new FormData();
+            formData.append("file", selectedImage);
+
+            try {
+                const response = await fetch("http://localhost:8150/api/images/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (!response.ok) throw new Error("Erro no upload");
+
+                const data = await response.json();
+                imageUrl = data.path;
+                console.log("Imagem enviada com sucesso:", imageUrl);
+            } catch (error) {
+                console.error("Erro ao fazer upload da imagem:", error);
+                alert("Falha ao enviar imagem.");
+                return;
+            }
+        } else {
+            alert("Você precisa selecionar uma imagem antes de registrar a receita.");
+            return;
+        }
+
+        // Criação da receita com a imagem já enviada
         let recipe: Receita = new Receita();
         try {
-            // console.log((document.getElementById("recipeDificultyInput") as HTMLIonSelectElement).value);
             recipe.setNome((document.getElementById("recipeNameInput") as HTMLInputElement).value);
             recipe.setDescricao((document.getElementById("recipeDescriptionInput") as HTMLInputElement).value);
-            recipe.setImagemURL((document.getElementById("recipeImageUrlInput") as HTMLInputElement).value);
+            recipe.setImagemURL(imageUrl);
             recipe.setTempo(parseInt((document.getElementById("recipePrepareTimeInput") as HTMLInputElement).value));
             recipe.setPontosEcologicos(parseInt((document.getElementById("recipeEcologicalPointsInput") as HTMLInputElement).value));
-            recipe.setCusto(parseInt((document.getElementById("recipeEcologicalPointsInput") as HTMLInputElement).value));
+            if (costValue === null || isNaN(costValue)) {
+                alert("Valor de custo inválido.");
+                return;
+            }
+            recipe.setCusto(costValue);
+
             recipe.setTipoDificuldade((document.getElementById("recipeDificultyInput") as HTMLIonSelectElement).value);
-            recipe.setTipoCusto((document.getElementById("recipeCostInput") as HTMLInputElement).value);
-            recipe.setCategoria((document.getElementById("recipeCategoryInput") as HTMLInputElement).value);
+            recipe.setTipoCusto((document.getElementById("recipeCostInput") as HTMLIonSelectElement).value);
+            recipe.setCategoria((document.getElementById("recipeCategoryInput") as HTMLIonSelectElement).value);
             recipe.setPassoAPasso(recipeSteps);
             recipe.setAutor((document.getElementById("recipeAuthorInput") as HTMLInputElement).value);
-            
         } catch (error) {
-            console.error("Error setting recipe properties: ", error);
+            console.error("Erro ao definir os dados da receita:", error);
+            return;
         }
-        
+
         let ingredientsList: IngredienteSet[] = [];
 
-        // ingredientsList = [...recicableIngredients, ...homeTools, ...boughtTools];
-
-        if (recicableIngredients.length > 0) {
-            for (let i = 0; i < recicableIngredients.length; i++) {
-                let ingredientSet = new IngredienteSet();
-                ingredientSet.setNome(recicableIngredients[i].getName());
-                ingredientSet.setTipoIngrediente(recicableIngredients[i].getType());
-                ingredientsList.push(ingredientSet);
-            }
-        }
-
-        if (homeTools.length > 0) {
-            for (let i = 0; i < homeTools.length; i++) {
-                let ingredientSet = new IngredienteSet();
-                ingredientSet.setNome(homeTools[i].getName());
-                ingredientSet.setTipoIngrediente(homeTools[i].getType());
-                ingredientsList.push(ingredientSet);
-            }
-        }
-
-        if (boughtTools.length > 0) {
-            for (let i = 0; i < boughtTools.length; i++) {
-                let ingredientSet = new IngredienteSet();
-                ingredientSet.setNome(boughtTools[i].getName());
-                ingredientSet.setTipoIngrediente(boughtTools[i].getType());
-                ingredientsList.push(ingredientSet);
-            }
-        }
+        [...recicableIngredients, ...homeTools, ...boughtTools].forEach((ingredient) => {
+            const item = new IngredienteSet();
+            item.setNome(ingredient.getName());
+            item.setTipoIngrediente(ingredient.getType());
+            ingredientsList.push(item);
+        });
 
         recipe.setIngredienteSet(ingredientsList);
-        
-        console.log(recipe);
-        
-        let recipeControler = new ReceitaControler();
 
-        recipeControler.createRecipe(recipe).then((response) => {
-            console.log(response);
-        }).catch((error) => {
-            console.error(error);
-        });
+        const recipeControler = new ReceitaControler();
+        recipeControler.createRecipe(JSON.parse(recipe.toJson()))
+            .then((response) => {
+                console.log("Receita criada com sucesso:", response);
+                alert("Receita registrada com sucesso!");
+            })
+            .catch((error) => {
+                console.error("Erro ao cadastrar receita:", error);
+                alert("Erro ao registrar receita.");
+            });
+
     }
+
+
 
     return (
         <div style={{display: "flex"}}>
@@ -298,9 +363,10 @@ const RecipeRegistrierPage: React.FC = () => {
 
                         <div className="form-row">
                             <IonItem className="form-column">
-                                <IonLabel>Image URL</IonLabel>
-                                <IonInput id="recipeImageUrlInput"></IonInput>
+                                <IonLabel position="stacked">Imagem da Receita</IonLabel>
+                                <input type="file" accept="image/*" onChange={handleImageSelection} />
                             </IonItem>
+
 
                             <IonItem className="form-column">
                                 <IonLabel>Ecological Points</IonLabel>
@@ -312,7 +378,7 @@ const RecipeRegistrierPage: React.FC = () => {
                         <IonItem lines="none" className="form-column">
                             <IonLabel>Cost</IonLabel>
                             <div className="custom-cost-input">
-                                <InputNumber mode="currency" currency="BRL" locale="pt-BR"></InputNumber>
+                                <InputNumber id="recipeCostValueInput" mode="currency" currency="BRL" locale="pt-BR" value={costValue} onValueChange={(e) => setCostValue(e.value ?? null)}></InputNumber>
                             </div>
                         </IonItem>
                         <IonItem className="form-column">

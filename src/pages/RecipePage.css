@@ -2,6 +2,11 @@
   --ion-background-color: #E8F5E9;
 }
 
+ion-item {
+  --background: transparent;
+}
+
+
 @font-face {
   font-family: 'StudyAlone';
   src: url('/assets/fonts/Study Alone.otf') format('opentype');
@@ -11,16 +16,34 @@
 #recipeContentBox {
   margin-top: 20px;
   width: 90%;
+  margin-left: auto;
+  margin-right: auto;
   align-self: center;
   justify-self: center;
   border: 2px solid #A5D6A7;
   border-radius: 20px;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.4);
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: row;
+  gap: 30px;
+
 }
+
+#recyclableItemContainer .recipeConteinersTitleLabel {
+  color: #2e7d32;
+}
+#homeToolsItemContainer .recipeConteinersTitleLabel {
+  color: #0277bd;
+}
+#shopToolsItemContainer .recipeConteinersTitleLabel {
+  color: #ff6f00;
+}
+#recipeStepsItemContainer .recipeConteinersTitleLabel {
+  color: #6a1b9a;
+}
+
 
 /* Imagem */
 #recipeContentBox ion-img {
@@ -132,15 +155,20 @@
 
 /* Estilo dos itens dentro do acordeão */
 .recipeAccordion ion-item {
-  --background: #1b1b1b;
-  --color: #ffffff;
+  --color: #000000;
   font-weight: 500;                 
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #ccc;
 }
-.recipeAccordion ion-item:hover {
-  --background: #333;
-}
+
 .recipeAccordion ion-item ion-label {
   font-size: 18px;
   font-weight: 500;
+}
+
+.recipeDescriptionBlock {
+  --background: transparent;
+  --color: #1b1b1b;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 8px;
 }

@@ -12,12 +12,12 @@ const SearchItem: React.FC<SearchItemProps> = ({ recipe }) => {
 
     return (
         <>
-            <IonItem id="searchItemBox" lines="none" onClick={() => history.push("/recipe/"+recipe.getRecipeURL())} style={recipe.getRecipeCategory() == "Utility" ?
-                { borderLeftWidth: "30px", borderLeftStyle: "solid", borderColor: "#007aff" } : recipe.getRecipeCategory() == "Gardening" ?
-                { borderLeftWidth: "30px", borderLeftStyle: "solid", borderColor: "#28c900" } : recipe.getRecipeCategory() == "Toy" ?
+            <IonItem id="searchItemBox" lines="none" onClick={() => history.push(recipe.getRecipeURL())} style={recipe.getRecipeCategory() == "UTILIDADE" ?
+                { borderLeftWidth: "30px", borderLeftStyle: "solid", borderColor: "#007aff" } : recipe.getRecipeCategory() == "JARDINAGEM" ?
+                { borderLeftWidth: "30px", borderLeftStyle: "solid", borderColor: "#28c900" } : recipe.getRecipeCategory() == "BRINQUEDO" ?
                 { borderLeftWidth: "30px", borderLeftStyle: "solid", borderColor: "#ff3d00" } :
                 { borderLeftWidth: "30px", borderLeftStyle: "solid", borderColor: "#ffcc00" }}>
-                <IonImg src="https://s3.static.brasilescola.uol.com.br/be/2020/12/partes-da-flor.jpg" id="searchItemImage"></IonImg>
+                <IonImg src={recipe.getImagemURL() || "https://via.placeholder.com/150"} id="searchItemImage" />
                 <div id="searchItemContent">
                     <IonTitle>{recipe.getRecipeName() == "" ? "RECIPE NAME" : recipe.getRecipeName()}</IonTitle>
                     <div id="ecoPointsContainer">
@@ -31,7 +31,7 @@ const SearchItem: React.FC<SearchItemProps> = ({ recipe }) => {
                     <div id="searchItemDetails">
                         <IonItem className="searchItemDetailsBox" lines="none">
                             <IonIcon icon={timer}></IonIcon>
-                            <IonLabel>{recipe.getRecipeTime() == 0 ? "30" : recipe.getRecipeTime()} min</IonLabel>
+                            <IonLabel>{recipe.getRecipeTime() > 0 ? `${recipe.getRecipeTime()} min` : "Tempo indefinido"}</IonLabel>
                         </IonItem>
                         <IonItem className="searchItemDetailsBox" lines="none">
                             <IonIcon icon={flask}></IonIcon>

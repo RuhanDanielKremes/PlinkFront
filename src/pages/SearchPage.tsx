@@ -4,30 +4,44 @@ import './SearchPage.css';
 import SearchItem from "../components/SearchItem";
 import { RecipeModel } from "../model/RecipeModel";
 import Sidebar from "../components/Sidebar";
+import React, { useEffect, useState } from "react";
+
 
 const SearchPage: React.FC = () => {
-
-    let recipe1 = new RecipeModel();
-    recipe1.setImagemURL("https://via.placeholder.com/150");
-    recipe1.setRecipeName("Recipe 1");
-    recipe1.setRecipeURL("Recipe-1#1");
-    recipe1.setRecipeEcoPoint(3);
-    recipe1.setRecipeDescription("This is a description for Recipe 1.");
-    recipe1.setRecipeTime(30);
-    recipe1.setRecipeDificulty("Easy");
-    recipe1.setRecipeCost("Cheap");
-    recipe1.setRecipeCategory("Utility");
-
-    let recipe2 = new RecipeModel();
-    recipe2.setImagemURL("https://via.placeholder.com/150");
-    recipe2.setRecipeName("Recipe 2");
-    recipe2.setRecipeURL("Recipe-2#2");
-    recipe2.setRecipeEcoPoint(4);
-    recipe2.setRecipeDescription("lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-    recipe2.setRecipeTime(45);
-    recipe2.setRecipeDificulty("Medium");
-    recipe2.setRecipeCost("Expensive");
-    recipe2.setRecipeCategory("Gardening");
+    const [recipes, setRecipes] = useState<RecipeModel[]>([]);
+    
+    useEffect(() => {
+        
+        fetch("http://localhost:8150/api/system/receitas", {
+            
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        
+        
+        .then((res) => res.json())
+        .then((data) => {
+                console.log("Receitas da API:", data);
+                const loadedRecipes = data.map((item: any) => {
+                    console.log("Receita bruta:", item);
+                    const recipe = new RecipeModel();
+                    recipe.setImagemURL(item.imagemUrl);
+                    recipe.setRecipeName(item.nome);
+                    recipe.setRecipeURL(`recipe/${item.nome}#${item.receitaId}`);
+                    recipe.setRecipeEcoPoint(item.pontosEcologicos);
+                    recipe.setRecipeDescription(item.descricao);
+                    recipe.setRecipeTime(item.tempo);
+                    recipe.setRecipeDificulty(item.tipoDificuldade);
+                    recipe.setRecipeCost(item.tipoCusto);
+                    recipe.setRecipeCategory(item.categoria);
+                    return recipe;
+                });
+                setRecipes(loadedRecipes);
+            })
+            .catch((err) => console.error("Erro ao buscar receitas:", err));
+    }, []);
 
     return (
         <div style={{display: "flex"}}>
@@ -38,8 +52,11 @@ const SearchPage: React.FC = () => {
             </IonHeader>
             <IonContent fullscreen>
                 <IonList style={{backgroundColor:"transparent"}}>
-                    <SearchItem recipe={recipe1}></SearchItem>
-                    <SearchItem recipe={recipe2}></SearchItem>
+                    {recipes.map((recipe, index) => (
+                        
+                        <SearchItem key={index} recipe={recipe} />
+                    ))}
+
                 </IonList>
             </IonContent>
         </IonPage>

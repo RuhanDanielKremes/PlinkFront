@@ -3,6 +3,8 @@ import { RecipeModel } from "../model/RecipeModel";
 import './RecipePage.css';
 import { caretDownCircle, cash, flask, leaf, timer } from "ionicons/icons";
 import Sidebar from "../components/Sidebar";
+import React, { useEffect, useState } from "react";
+
 
 const RecipePage: React.FC = () => {
 
@@ -10,20 +12,56 @@ const RecipePage: React.FC = () => {
     let urlParts = url.split('/recipe/');
     let uri = urlParts[1];
     let recipeIdentifier = uri ? uri.split('#')[1] : null;
+    
+    const [recipe, setRecipe] = useState<RecipeModel | null>(null);
 
-    let recipe: RecipeModel;
-    recipe = new RecipeModel();
-    recipe.setRecipeName("Test Recipe");
-    recipe.setRecipeDescription("This is a test recipe.");
-    recipe.setReciclableIngredients(["Ingredient 1", "Ingredient 2"]);
-    recipe.setHomeTools(["Tool 1", "Tool 2"]);
-    recipe.setShopTools(["Tool 3", "Tool 4"]);
-    recipe.setRecipeSteps(["Step 1", "Step 2", "Step 3"]);
-    recipe.setImagemURL("https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msIoL?w=0&h=0&q=60&m=6&f=jpg&u=t");
-    recipe.setRecipeTime(30);
-    recipe.setRecipeDificulty("Easy");
-    recipe.setRecipeCost("Low");
-    recipe.setRecipeEcoPoint(3);
+    useEffect(() => {
+        if (!recipeIdentifier) return;
+
+        fetch(`http://localhost:8150/api/system/receitas/${recipeIdentifier}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log("ingredientes:", data.ingredienteSet);
+                const r = new RecipeModel();
+                r.setRecipeId(data.receitaId);
+                r.setRecipeName(data.nome);
+                r.setRecipeDescription(data.descricao);
+                r.setImagemURL(data.imagemUrl);
+                r.setReciclableIngredients(data.ingredienteSet
+                    .filter((i: any) => i.tipoIngrediente === 'INGREDIENTE')
+                    .map((i: any) => i.nome));
+                r.setHomeTools(data.ingredienteSet
+                    .filter((i: any) => i.tipoIngrediente === 'FERRAMENTA_CASA')
+                    .map((i: any) => i.nome));
+                r.setShopTools(data.ingredienteSet
+                    .filter((i: any) => i.tipoIngrediente === 'FERRAMENTA_COMPRA')
+                    .map((i: any) => i.nome));
+                r.setRecipeSteps(data.passoAPasso);
+                r.setRecipeTime(data.tempo);
+                r.setRecipeEcoPoint(data.pontosEcologicos);
+                r.setRecipeCost(data.tipoCusto);
+                r.setRecipeDificulty(data.tipoDificuldade);
+                r.setRecipeCategory(data.categoria);
+                r.setRecipeAuthor(data.autor);
+
+                setRecipe(r);
+            })
+            .catch(err => {
+                console.error("Erro ao carregar receita:", err);
+            });
+    }, [recipeIdentifier]);
+
+    if (!recipe) return (
+        <div style={{ display: "flex" }}>
+            <Sidebar />
+            <IonPage className="ionPage" style={{ marginLeft: '70px' }}>
+                <IonContent fullscreen>
+                    <p style={{ margin: 'auto', textAlign: 'center', paddingTop: '30%' }}>Carregando receita...</p>
+                </IonContent>
+            </IonPage>
+        </div>
+    );
+
 
     return (
         <div style={{ display: "flex" }}>
@@ -34,7 +72,7 @@ const RecipePage: React.FC = () => {
                         <IonImg src={recipe.getImagemURL()}></IonImg>
                         <div id="generalRecipeInfo">
                             <IonTitle id="recipeName">{recipe.getRecipeName()}</IonTitle>
-                            <IonItem>{recipe.getRecipeDescription()}</IonItem>
+                            <IonItem className="recipeDescriptionBlock">{recipe.getRecipeDescription()}</IonItem>
                         </div>
                         <IonItem style={{minWidth: "100%", color:"white", justifyContent:"space-between"}}>
                             <IonItem className="searchItemDetailsBox" lines="none">

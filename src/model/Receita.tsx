@@ -146,22 +146,23 @@ export class Receita {
     // }
 
     public toJson(): string {
-        return JSON.stringify({
-            receitaId: this.receitaId,
-            nome: this.nome,
-            descricao: this.descricao,
-            imagemURL: this.imagemURL,
-            ingredienteSet: this.ingredienteSet,
-            passoAPasso: this.passoAPasso,
-            tempo: this.tempo,
-            tipoDificuldade: this.tipoDificuldade,
-            pontosEcológicos: this.pontosEcologicos,
-            tipoCusto: this.tipoCusto,
-            custo: this.custo,
-            categoria: this.categoria,
-            autor: this.autor,
-            dataHoraCriacao: this.dataHoraCriacao
-        });
-    }
+    return JSON.stringify({
+        receitaId: this.receitaId,
+        nome: this.nome,
+        descricao: this.descricao,
+        imagemUrl: this.imagemURL, 
+        ingredienteSet: this.ingredienteSet,
+        passoAPasso: this.passoAPasso,
+        tempo: this.tempo,
+        tipoDificuldade: this.tipoDificuldade,
+        pontosEcologicos: this.pontosEcologicos,
+        tipoCusto: this.tipoCusto,
+        custo: this.custo,
+        categoria: this.categoria,
+        autor: this.autor,
+        dataHoraCriacao: this.dataHoraCriacao
+    });
+}
+
 
 }

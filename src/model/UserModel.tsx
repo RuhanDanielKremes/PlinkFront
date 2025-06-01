@@ -56,7 +56,7 @@ export class UserModel {
 
     public toJson(): string {
         return JSON.stringify({
-            userId: this.userId,
+            usuarioId: this.userId,
             email: this.email,
             login: this.login,
             senha: this.senha,
