@@ -35,4 +35,13 @@ export class UserControler {
         return this.http.sendJson('/usuarios/' + userId,'GET');
     }
 
+    public getUserByToken() {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            return this.http.sendJson('/usuarios/token', 'GET');
+        } else {
+            return Promise.reject(new Error("No token found in session storage"));
+        }
+    }
+
 }

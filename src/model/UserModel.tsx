@@ -1,13 +1,13 @@
 export class UserModel {
 
-    private userId: number;
+    private usuarioId: number;
     private email: string;
     private login: string;
     private senha: string;
     private nomeCompleto: string;
 
     constructor() {
-        this.userId = 0;
+        this.usuarioId = 0;
         this.email = "";
         this.login = "";
         this.senha = "";
@@ -15,11 +15,11 @@ export class UserModel {
     }
 
     public getUserId(): number {
-        return this.userId;
+        return this.usuarioId;
     }
 
     public setUserId(userId: number): void {
-        this.userId = userId;
+        this.usuarioId = userId;
     }
 
     public getEmail(): string {
@@ -56,7 +56,7 @@ export class UserModel {
 
     public toJson(): string {
         return JSON.stringify({
-            usuarioId: this.userId,
+            usuarioId: this.usuarioId,
             email: this.email,
             login: this.login,
             senha: this.senha,

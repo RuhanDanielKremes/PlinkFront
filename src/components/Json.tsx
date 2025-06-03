@@ -4,7 +4,8 @@ export class HttpConection{
 
      //private url:string = "http://servercasa.com:9080/manager/links";
      //private url:string = "http://10.20.2.13:8150/api/system";
-     private url:string = "http://localhost:8150/api/system";
+     private url:string = "http://10.20.2.14:8150/api/system";
+    //  private url:string = "http://localhost:8150/api/system";
 
     public constructor(endpoint:string){
         this.url += endpoint;
