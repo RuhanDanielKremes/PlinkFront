@@ -1,6 +1,6 @@
 import { IonButton, IonContent, IonIcon, IonImg, IonInput, IonItem, IonPage, IonTitle } from "@ionic/react"
 import plink from "../assets/images/Plink.png";
-import { personCircle, lockClosed} from "ionicons/icons";
+import { personCircle, lockClosed, mail } from "ionicons/icons";
 import './LoginPage.css';
 import { useHistory } from "react-router-dom";
 import { UserModel } from "../model/UserModel";
@@ -59,8 +59,8 @@ const LoginPage: React.FC = () => {
                             {/* <form onSubmit={handleSubmit(tryLogin)}> */}
                             <form>
                                 <IonItem id="II03" className="ion-item-login itemLightBackground1 greyText" style={{ "--min-height": "80px", marginTop: "20px"}}>
-                                    <IonIcon icon={personCircle} color="primary" style={{marginRight: "20px"}}></IonIcon>
-                                    <IonInput className="ion-input-login" label="Usuário" labelPlacement="floating"  placeholder="Usuário" id="User" required style={{width:"460px"}}></IonInput>
+                                    <IonIcon icon={mail} color="primary" style={{marginRight: "20px"}}></IonIcon>
+                                    <IonInput className="ion-input-login" label="Email" labelPlacement="floating"  placeholder="Email" id="User" required style={{width:"460px"}}></IonInput>
                                 </IonItem>
                                 <IonItem id="II04" className="ion-item-login itemLightBackground1 greyText" style={{ "--min-height": "80px", Width: "400px" }}>
                                     <IonIcon icon={lockClosed} color="primary" style={{marginRight: "20px"}}></IonIcon>
