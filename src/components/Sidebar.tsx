@@ -6,11 +6,14 @@ import plink from "../assets/images/Plink.png";
 import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
+  function sendLogin() {
+    return (window.location.href = "/login");
+  }
   return (
     <div className="sidebar">
       <div className="logo">
-        <Link to="/home" className="no-style-link"><img src={plink} alt="Plink Logo"/></Link>
-        
+        <Link to="/login" className="no-style-link"><img src={plink} alt="Plink Logo" onClick={sendLogin}/></Link>
+
       </div>
       <div className="sidebar-icon">
         <div className="icon-wrapper">

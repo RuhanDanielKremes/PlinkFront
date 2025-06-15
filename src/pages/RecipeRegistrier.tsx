@@ -1,7 +1,7 @@
 import { IonButton, IonChip, IonContent, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption, IonTextarea } from "@ionic/react";
 import { Ingredients } from "../model/Ingredients";
 import { add, close } from "ionicons/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputNumber } from 'primereact/inputnumber';
 import { Receita } from "../model/Receita";
 import { ReceitaControler } from "../controlers/ReceitaControler";
@@ -19,6 +19,14 @@ const RecipeRegistrierPage: React.FC = () => {
     const [costValue, setCostValue] = useState<number | null>(null);
 
     const [recipeSteps, setRecipeSteps] = useState<string[]>([]);
+
+    function verifyToken() {
+        const token = sessionStorage.getItem("token");
+        if (token === null || token === undefined) {
+            alert("Você precisa estar logado para acessar essa página.");
+            return (window.location.href = "/login");
+        }
+    }
 
     function addRecicableIngredients() {
         const recicableItemInput = document.getElementById("recicableItemInput") as HTMLInputElement;
@@ -223,8 +231,13 @@ const RecipeRegistrierPage: React.FC = () => {
 
     }
 
-
-
+    let verifyOnce = false;
+    useEffect(() => {
+        if (!verifyOnce) {
+            verifyToken();
+            verifyOnce = true;
+        }
+    }, []);
     return (
         <div style={{display: "flex"}}>
             <Sidebar />

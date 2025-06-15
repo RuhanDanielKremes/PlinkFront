@@ -10,6 +10,16 @@ import Sidebar from "../components/Sidebar";
 
 const UserSettings: React.FC = () => {
 
+  function verifyToken() {
+        const token = sessionStorage.getItem("token");
+        console.log("Token:", token);
+        if (token === null || token === undefined) {
+
+            alert("Você precisa estar logado para acessar essa página.");
+            return (window.location.href = "/login");
+        }
+    }
+
   async function handleSave() {
     const username = (document.getElementById("Username") as HTMLInputElement).value;
     const email = (document.getElementById("Email") as HTMLInputElement).value;
@@ -70,6 +80,14 @@ const UserSettings: React.FC = () => {
       }
     });
   }
+
+  let verifyOnce = false;
+    useEffect(() => {
+        if (!verifyOnce) {
+            verifyToken();
+            verifyOnce = true;
+        }
+    }, []);
 
   return (
     <div style={{display: "flex"}}>
