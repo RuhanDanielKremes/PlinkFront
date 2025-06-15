@@ -18,7 +18,7 @@ const RecipePage: React.FC = () => {
     useEffect(() => {
         if (!recipeIdentifier) return;
 
-        fetch(`http://192.168.0.100:8150/api/system/receitas/${recipeIdentifier}`)
+        fetch(`http://localhost:8150/api/system/receitas/${recipeIdentifier}`)
             .then(res => res.json())
             .then(data => {
                 console.log("ingredientes:", data.ingredienteSet);

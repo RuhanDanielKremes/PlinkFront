@@ -163,7 +163,7 @@ const RecipeRegistrierPage: React.FC = () => {
             formData.append("file", selectedImage);
 
             try {
-                const response = await fetch("http://192.168.0.100:8150/api/images/upload", {
+                const response = await fetch("http://localhost:8150/api/images/upload", {
                     method: "POST",
                     body: formData,
                 });

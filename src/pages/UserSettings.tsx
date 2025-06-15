@@ -67,7 +67,7 @@ const UserSettings: React.FC = () => {
           if (deleteResponse.status === 204) {
             alert("User deleted successfully!");
             sessionStorage.removeItem('token'); 
-            window.location.href = "/plink/login"; 
+            window.location.href = "/login"; 
           } else {
             alert("Failed to delete user.");
           }

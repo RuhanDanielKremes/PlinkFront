@@ -2,12 +2,14 @@ export class UserModel {
 
     private usuarioId: number;
     private email: string;
+    private login: string;
     private senha: string;
     private nomeCompleto: string;
 
     constructor() {
         this.usuarioId = 0;
         this.email = "";
+        this.login = "";
         this.senha = "";
         this.nomeCompleto = "";
     }
@@ -26,6 +28,14 @@ export class UserModel {
 
     public setEmail(email: string): void {
         this.email = email;
+    }
+
+    public getLogin(): string {
+        return this.login;
+    }
+
+    public setLogin(login: string): void {
+        this.login = login;
     }
 
     public getSenha(): string {
@@ -48,6 +58,7 @@ export class UserModel {
         return JSON.stringify({
             usuarioId: this.usuarioId,
             email: this.email,
+            login: this.login,
             senha: this.senha,
             nomeCompleto: this.nomeCompleto
         });

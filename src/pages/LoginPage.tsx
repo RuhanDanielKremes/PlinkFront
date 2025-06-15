@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
         const password = (document.getElementById("password") as HTMLInputElement).value;
 
         let userModel = new UserModel();
-        userModel.setEmail(user);
+        userModel.setLogin(user);
         userModel.setSenha(password);
 
         console.log(userModel.toJson());
@@ -73,7 +73,7 @@ const LoginPage: React.FC = () => {
                         </IonItem>
                         <IonItem type="submit"  style={{justifyContent:"center"}} id="subscribeContainer" className="ion-item-login itemLightBackground1 greyText" lines="none">
                             <p>Does you not have an login?</p>
-                            <a href="/plink/signin" style={{paddingLeft:"3px"}}>Subscribe!</a>
+                            <a href="/signin" style={{paddingLeft:"3px"}}>Subscribe!</a>
                         </IonItem>
                         {/* <IonButton type="button" onClick={() => history.push("/recipe")}>Go to recipes</IonButton> */}
                     </div>
