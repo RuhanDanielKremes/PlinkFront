@@ -12,7 +12,7 @@ const SearchPage: React.FC = () => {
     
     useEffect(() => {
         
-        fetch("http://localhost:8150/api/system/receitas", {
+        fetch("http://192.168.0.100:8150/api/system/receitas", {
             
             method: "GET",
             headers: {

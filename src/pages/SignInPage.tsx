@@ -17,7 +17,6 @@ const SignInPage: React.FC = () => {
 
         let userModel = new UserModel();
 
-        userModel.setLogin(email);
         userModel.setSenha(password);
         userModel.setEmail(email);
         userModel.setNomeCompleto(user);
@@ -27,7 +26,7 @@ const SignInPage: React.FC = () => {
             console.log(response);
             if (response.status === 201) {
                 alert("User created successfully!\nPlease login to continue.");
-                window.location.href = "/login";
+                window.location.href = "/plink/login";
             } else {
                 alert("Error: " + response.statusText);
             }
@@ -69,7 +68,7 @@ const SignInPage: React.FC = () => {
                         </IonItem>
                         <IonItem style={{justifyContent:"center"}} id="subscribeContainer" className="ion-item-login itemLightBackground1 greyText" lines="none">
                             <p>Already have an account?</p>
-                            <a href="/login" style={{paddingLeft:"3px"}}>Login!</a>
+                            <a href="/plink/login" style={{paddingLeft:"3px"}}>Login!</a>
                         </IonItem>
                         {/* <IonButton type="button" onClick={() => history.push("/recipe")}>Go to recipes</IonButton> */}
                     </div>

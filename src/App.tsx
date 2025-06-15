@@ -32,6 +32,8 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
+
 import SearchPage from './pages/SearchPage';
 import RecipePage from './pages/RecipePage';
 import LoginPage from './pages/LoginPage';
@@ -41,11 +43,13 @@ import UserSettings from './pages/UserSettings';
 
 setupIonicReact();
 
+
+
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
+    <IonReactRouter basename='/plink'>
       <IonRouterOutlet>
-        <Route exact path="/home">
+        <Route exact path="">
           <Home />
         </Route>
         <Route exact path="/search/:queryParam">
@@ -65,9 +69,6 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/recipes/register">
           <RecipeRegistrierPage></RecipeRegistrierPage>
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
         </Route>
         <Route exact path="/setting">
           <UserSettings />

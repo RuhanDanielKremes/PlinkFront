@@ -14,7 +14,7 @@ export class LoginControler {
     }
 
     public login(user: UserModel) {
-        let json = `{"login": "${user.getLogin()}", "senha": "${user.getSenha()}"}`;
+        let json = `{"login": "${user.getEmail()}", "senha": "${user.getSenha()}"}`;
         return this.http.sendJson('/auth', 'POST', json);
     }
 
